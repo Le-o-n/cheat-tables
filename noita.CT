@@ -27,8 +27,8 @@ registersymbol(player_struct_hook)
 aobscanmodule(potion_hook,noita.exe,F2 0F 11 04 F0 E8)
 registersymbol(potion_hook)
 
-aobscanmodule(spell_number_inject,noita.exe,89 48 68 8B 4D F0)
-registersymbol(spell_number_inject)
+aobscanmodule(inf_spell_inject,noita.exe,8B 41 68 3B C7)
+registersymbol(inf_spell_inject)
 
 alloc(godmode_health,4)
 registersymbol(godmode_health)
@@ -51,7 +51,7 @@ unregistersymbol(force_overwrite_seed_inject)
 unregistersymbol(godmode_inject)
 unregistersymbol(player_struct_hook)
 unregistersymbol(potion_hook)
-unregistersymbol(spell_number_inject)
+unregistersymbol(inf_spell_inject)
 
 unregistersymbol(godmode_health)
 dealloc(godmode_health)
@@ -670,13 +670,13 @@ noita.exe+676A65: 8B 47 74                          - mov eax,[edi+74]
           <GroupHeader>1</GroupHeader>
           <CheatEntries>
             <CheatEntry>
-              <ID>1043</ID>
+              <ID>1048</ID>
               <Description>"inf_spells"</Description>
               <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : noita.exe
   Version: 
-  Date   : 2024-01-25
+  Date   : 2024-01-27
   Author : Leon
 
   This script does blah blah blah
@@ -685,59 +685,56 @@ noita.exe+676A65: 8B 47 74                          - mov eax,[edi+74]
 [ENABLE]
 
 
-
 alloc(newmem,$1000)
 
 label(code)
 label(return)
 
 newmem:
-
+  mov [ecx+68],#9999
 code:
-  mov ecx,#999
-  mov [eax+68],ecx
-  mov ecx,[ebp-10]
+  mov eax,[ecx+68]
+  cmp eax,edi
   jmp return
 
-spell_number_inject:
+inf_spell_inject:
   jmp newmem
-  nop
 return:
 
 
 [DISABLE]
 
-spell_number_inject:
-  db 89 48 68 8B 4D F0
+inf_spell_inject:
+  db 8B 41 68 3B C7
 
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: noita.exe+5D620F
+// ORIGINAL CODE - INJECTION POINT: noita.exe+60DD5D
 
-noita.exe+5D61F8: FF 50 28           - call dword ptr [eax+28]
-noita.exe+5D61FB: 83 F8 FF           - cmp eax,-01
-noita.exe+5D61FE: 7E 12              - jle noita.exe+5D6212
-noita.exe+5D6200: 8B 13              - mov edx,[ebx]
-noita.exe+5D6202: 8B CB              - mov ecx,ebx
-noita.exe+5D6204: 50                 - push eax
-noita.exe+5D6205: FF 52 1C           - call dword ptr [edx+1C]
-noita.exe+5D6208: 85 C0              - test eax,eax
-noita.exe+5D620A: 74 06              - je noita.exe+5D6212
-noita.exe+5D620C: 8B 4D E4           - mov ecx,[ebp-1C]
+noita.exe+60DD3E: 7E 3E              - jle noita.exe+60DD7E
+noita.exe+60DD40: 8B C8              - mov ecx,eax
+noita.exe+60DD42: E8 59 06 01 00     - call noita.exe+61E3A0
+noita.exe+60DD47: 84 C0              - test al,al
+noita.exe+60DD49: 75 08              - jne noita.exe+60DD53
+noita.exe+60DD4B: 38 05 31 3D F4 00  - cmp [noita.exe+B43D31],al
+noita.exe+60DD51: 74 2B              - je noita.exe+60DD7E
+noita.exe+60DD53: 8B 4C 24 20        - mov ecx,[esp+20]
+noita.exe+60DD57: 80 79 64 00        - cmp byte ptr [ecx+64],00
+noita.exe+60DD5B: 75 21              - jne noita.exe+60DD7E
 // ---------- INJECTING HERE ----------
-noita.exe+5D620F: 89 48 68           - mov [eax+68],ecx
+noita.exe+60DD5D: 8B 41 68           - mov eax,[ecx+68]
 // ---------- DONE INJECTING  ----------
-noita.exe+5D6212: 8B 4D F0           - mov ecx,[ebp-10]
-noita.exe+5D6215: E8 16 84 04 00     - call noita.exe+61E630
-noita.exe+5D621A: 8B 15 A8 C6 FF 00  - mov edx,[noita.exe+BFC6A8]
-noita.exe+5D6220: 83 C6 08           - add esi,08
-noita.exe+5D6223: 3B F7              - cmp esi,edi
-noita.exe+5D6225: 0F 85 0C FF FF FF  - jne noita.exe+5D6137
-noita.exe+5D622B: 8B 35 E0 C5 FF 00  - mov esi,[noita.exe+BFC5E0]
-noita.exe+5D6231: A1 EC C5 FF 00     - mov eax,[noita.exe+BFC5EC]
-noita.exe+5D6236: 89 35 E4 C5 FF 00  - mov [noita.exe+BFC5E4],esi
-noita.exe+5D623C: A3 F0 C5 FF 00     - mov [noita.exe+BFC5F0],eax
+noita.exe+60DD60: 3B C7              - cmp eax,edi
+noita.exe+60DD62: 8B 4C 24 28        - mov ecx,[esp+28]
+noita.exe+60DD66: 0F 4C F8           - cmovl edi,eax
+noita.exe+60DD69: 3B C1              - cmp eax,ecx
+noita.exe+60DD6B: 7D 09              - jnl noita.exe+60DD76
+noita.exe+60DD6D: 85 C0              - test eax,eax
+noita.exe+60DD6F: 0F 4F C8           - cmovg ecx,eax
+noita.exe+60DD72: 89 4C 24 28        - mov [esp+28],ecx
+noita.exe+60DD76: B2 01              - mov dl,01
+noita.exe+60DD78: 88 54 24 1B        - mov [esp+1B],dl
 }
 </AssemblerScript>
             </CheatEntry>
