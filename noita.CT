@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="45">
+<CheatTable CheatEngineTableVersion="42">
   <CheatEntries>
     <CheatEntry>
       <ID>6</ID>
-      <Description>"HOOKS"</Description>
+      <Description>"HOOKS [Enable when in a game]"</Description>
       <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
       <Color>0000FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
