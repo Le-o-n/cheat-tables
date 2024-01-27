@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="42">
+<CheatTable CheatEngineTableVersion="45">
   <CheatEntries>
     <CheatEntry>
       <ID>6</ID>
@@ -744,18 +744,6 @@ noita.exe+5D623C: A3 F0 C5 FF 00     - mov [noita.exe+BFC5F0],eax
           </CheatEntries>
         </CheatEntry>
       </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>1041</ID>
-      <Description>"No description"</Description>
-      <VariableType>4 Bytes</VariableType>
-      <Address>31382EA4</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>1042</ID>
-      <Description>"No description"</Description>
-      <VariableType>4 Bytes</VariableType>
-      <Address>24C068C8</Address>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
