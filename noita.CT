@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"HOOKS"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(noita_seed_menu_access,noita.exe,8D 8C 24 D0 00 00 00 A1)
+registersymbol(noita_seed_menu_access)
+
+aobscanmodule(gold_hook,noita.exe,8B 50 48 8B 85 FC FD FF FF)
+registersymbol(gold_hook)
+
+aobscanmodule(force_overwrite_seed_inject,noita.exe,B9 46 22 02 00)
+registersymbol(force_overwrite_seed_inject)
+
+aobscanmodule(godmode_inject,noita.exe,F2 0F 10 48 48 0F 5A C2)
+registersymbol(godmode_inject)
+
+aobscanmodule(player_struct_hook,noita.exe,F3 0F 58 4A 50)
+registersymbol(player_struct_hook)
+
+aobscanmodule(potion_hook,noita.exe,F2 0F 11 04 F0 E8)
+registersymbol(potion_hook)
+
+aobscanmodule(spell_number_inject,noita.exe,89 48 68 8B 4D F0)
+registersymbol(spell_number_inject)
+
+alloc(godmode_health,4)
+registersymbol(godmode_health)
+godmode_health:
+  dd (float)6969.0
+
+alloc(player_geometry_ptr,4)
+registersymbol(player_geometry_ptr)
+
+alloc(potion_capacity, 4)
+registersymbol(potion_capacity)
+potion_capacity:
+  dd (float)6.0
+
+[DISABLE]
+
+unregistersymbol(noita_seed_menu_access)
+unregistersymbol(gold_hook)
+unregistersymbol(force_overwrite_seed_inject)
+unregistersymbol(godmode_inject)
+unregistersymbol(player_struct_hook)
+unregistersymbol(potion_hook)
+unregistersymbol(spell_number_inject)
+
+unregistersymbol(godmode_health)
+dealloc(godmode_health)
+
+unregistersymbol(player_geometry_ptr)
+dealloc(player_geometry_ptr)
+
+unregistersymbol(potion_capacity)
+dealloc(potion_capacity)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"SEED"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17</ID>
+              <Description>"force_overwrite_seed"</Description>
+              <Options moHideChildren="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(seed_overwrite,8)
+registersymbol(seed_overwrite)
+
+seed_overwrite:
+  dq 0
+
+newmem:
+  mov eax,[seed_overwrite]
+originalcode:
+  mov ecx,00022246
+
+
+exit:
+  jmp returnhere
+
+force_overwrite_seed_inject:
+  jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+unregistersymbol(seed_overwrite)
+dealloc(seed_overwrite)
+dealloc(newmem)
+force_overwrite_seed_inject:
+  mov ecx,00022246
+
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>15</ID>
+                  <Description>"seed_overwrite"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>8 Bytes</VariableType>
+                  <Address>seed_overwrite</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>7</ID>
+              <Description>"get_seed_ptr"</Description>
+              <Options moHideChildren="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-13
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+
+alloc(newmem,$1000)
+
+alloc(seed_ptr, 4)
+registersymbol(seed_ptr)
+
+label(code)
+label(return)
+
+newmem:
+  push ecx
+  lea ecx, [noita_seed_menu_access]
+  add ecx, 8
+  mov [seed_ptr], ecx
+
+  pop ecx
+code:
+  lea ecx,[esp+000000D0]
+  jmp return
+
+noita_seed_menu_access:
+  jmp newmem
+  nop 2
+
+return:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+noita_seed_menu_access:
+  lea ecx,[esp+000000D0]
+
+dealloc(newmem)
+
+dealloc(seed_ptr)
+unregistersymbol(seed_ptr)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+254399
+
+noita.exe+254355: F3 0F 11 64 24 1C                 - movss [esp+1C],xmm4
+noita.exe+25435B: E8 D0 88 DD FF                    - call noita.exe+2CC30
+noita.exe+254360: 8B 44 24 28                       - mov eax,[esp+28]
+noita.exe+254364: 83 C4 04                          - add esp,04
+noita.exe+254367: 80 38 00                          - cmp byte ptr [eax],00
+noita.exe+25436A: 0F 84 81 05 00 00                 - je noita.exe+2548F1
+noita.exe+254370: C7 84 24 00 01 00 00 0F 00 00 00  - mov [esp+00000100],0000000F
+noita.exe+25437B: C7 84 24 FC 00 00 00 00 00 00 00  - mov [esp+000000FC],00000000
+noita.exe+254386: C6 84 24 EC 00 00 00 00           - mov byte ptr [esp+000000EC],00
+noita.exe+25438E: C7 84 24 D0 01 00 00 1E 00 00 00  - mov [esp+000001D0],0000001E
+// ---------- INJECTING HERE ----------
+noita.exe+254399: 8D 8C 24 D0 00 00 00              - lea ecx,[esp+000000D0]
+// ---------- DONE INJECTING  ----------
+noita.exe+2543A0: A1 44 A9 00 01                    - mov eax,[noita.exe+C0A944]
+noita.exe+2543A5: 68 80 05 E2 00                    - push noita.exe+A20580
+noita.exe+2543AA: 89 44 24 20                       - mov [esp+20],eax
+noita.exe+2543AE: E8 ED 86 DC FF                    - call noita.exe+1CAA0
+noita.exe+2543B3: 8D 54 24 1C                       - lea edx,[esp+1C]
+noita.exe+2543B7: C6 84 24 D0 01 00 00 1F           - mov byte ptr [esp+000001D0],1F
+noita.exe+2543BF: 8D 8C 24 84 00 00 00              - lea ecx,[esp+00000084]
+noita.exe+2543C6: E8 85 91 1D 00                    - call noita.exe+42D550
+noita.exe+2543CB: 50                                - push eax
+noita.exe+2543CC: 8D 94 24 D4 00 00 00              - lea edx,[esp+000000D4]
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>11</ID>
+                  <Description>"seed_ptr"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[[seed_ptr]]</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"GOLD"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>2</ID>
+              <Description>"get_gold_hook"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2023-03-23
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+alloc(gold_ptr,8)
+registersymbol(gold_ptr)
+
+newmem:
+  mov [gold_ptr],eax
+code:
+  mov edx,[eax+48]
+  mov eax,[ebp-00000204]
+  jmp return
+
+gold_hook:
+  jmp newmem
+  nop 4
+return:
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(gold_ptr)
+unregistersymbol(gold_ptr)
+gold_hook:
+  db 8B 50 48 8B 85 FC FD FF FF
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+611291
+
+noita.exe+61126C: E8 9F 6A A2 FF     - call noita.exe+37D10
+noita.exe+611271: 8B C8              - mov ecx,eax
+noita.exe+611273: E8 78 B2 A3 FF     - call noita.exe+4C4F0
+noita.exe+611278: 99                 - cdq 
+noita.exe+611279: B9 03 00 00 00     - mov ecx,00000003
+noita.exe+61127E: F7 F9              - idiv ecx
+noita.exe+611280: 85 D2              - test edx,edx
+noita.exe+611282: 0F 85 1B 01 00 00  - jne noita.exe+6113A3
+noita.exe+611288: 8B 85 CC FD FF FF  - mov eax,[ebp-00000234]
+noita.exe+61128E: 8B 48 4C           - mov ecx,[eax+4C]
+// ---------- INJECTING HERE ----------
+noita.exe+611291: 8B 50 48           - mov edx,[eax+48]
+// ---------- DONE INJECTING  ----------
+noita.exe+611294: 8B 85 FC FD FF FF  - mov eax,[ebp-00000204]
+noita.exe+61129A: 89 8D DC FD FF FF  - mov [ebp-00000224],ecx
+noita.exe+6112A0: 3B C8              - cmp ecx,eax
+noita.exe+6112A2: 0F 8C 85 00 00 00  - jl noita.exe+61132D
+noita.exe+6112A8: 7F 04              - jg noita.exe+6112AE
+noita.exe+6112AA: 3B D7              - cmp edx,edi
+noita.exe+6112AC: 76 71              - jna noita.exe+61131F
+noita.exe+6112AE: 2B D7              - sub edx,edi
+noita.exe+6112B0: 6A 00              - push 00
+noita.exe+6112B2: 6A 02              - push 02
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>3</ID>
+                  <Description>"gold"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[gold_ptr]+48</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"HEALTH"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>21</ID>
+              <Description>"godmode"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-25
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+
+newmem:
+  sub esp, 16
+  movups [esp], xmm0
+
+  movups xmm0, [godmode_health]
+  movups [eax+48+4], xmm0
+  movups [eax+48+4+8], xmm0
+
+  movups xmm0, [esp]
+  add esp, 16
+code:
+
+  movsd xmm1,[eax+48]
+  jmp return
+
+godmode_inject:
+  jmp newmem
+return:
+
+
+[DISABLE]
+
+godmode_inject:
+  db F2 0F 10 48 48
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+2850F7
+
+noita.exe+2850CA: EB 02                             - jmp noita.exe+2850CE
+noita.exe+2850CC: 33 C0                             - xor eax,eax
+noita.exe+2850CE: C7 84 24 B0 00 00 00 FF FF FF FF  - mov [esp+000000B0],FFFFFFFF
+noita.exe+2850D9: A3 B0 68 01 01                    - mov [noita.exe+C168B0],eax
+noita.exe+2850DE: FF 36                             - push [esi]
+noita.exe+2850E0: 8B 0D 2C 77 FF 00                 - mov ecx,[noita.exe+BF772C]
+noita.exe+2850E6: E8 25 F9 1A 00                    - call noita.exe+434A10
+noita.exe+2850EB: 85 C0                             - test eax,eax
+noita.exe+2850ED: 74 3F                             - je noita.exe+28512E
+noita.exe+2850EF: F3 0F 10 15 38 32 F4 00           - movss xmm2,[noita.exe+B43238]
+// ---------- INJECTING HERE ----------
+noita.exe+2850F7: F2 0F 10 48 48                    - movsd xmm1,[eax+48]
+// ---------- DONE INJECTING  ----------
+noita.exe+2850FC: 0F 5A C2                          - cvtps2pd xmm0,xmm2
+noita.exe+2850FF: 66 0F 2F C1                       - comisd xmm0,xmm1
+noita.exe+285103: 0F 97 C0                          - seta al
+noita.exe+285106: 84 C0                             - test al,al
+noita.exe+285108: 74 24                             - je noita.exe+28512E
+noita.exe+28510A: 0F 5A C2                          - cvtps2pd xmm0,xmm2
+noita.exe+28510D: F2 0F 5E C8                       - divsd xmm1,xmm0
+noita.exe+285111: 66 0F 5A C1                       - cvtpd2ps xmm0,xmm1
+noita.exe+285115: F3 0F 10 0D 98 AE E6 00           - movss xmm1,[noita.exe+A6AE98]
+noita.exe+28511D: F3 0F 5C C8                       - subss xmm1,xmm0
+}
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1018</ID>
+          <Description>"PLAYER"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1017</ID>
+              <Description>"hook_player_geometry"</Description>
+              <Options moHideChildren="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-25
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [player_geometry_ptr], edx
+  addss xmm1,[edx+50]
+  jmp return
+
+player_struct_hook:
+  jmp newmem
+return:
+
+
+[DISABLE]
+
+player_struct_hook:
+  db F3 0F 58 4A 50
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+28523B
+
+noita.exe+285220: A1 54 77 FF 00     - mov eax,[noita.exe+BF7754]
+noita.exe+285225: 0F 28 C8           - movaps xmm1,xmm0
+noita.exe+285228: 0F 28 D0           - movaps xmm2,xmm0
+noita.exe+28522B: 8B 48 5C           - mov ecx,[eax+5C]
+noita.exe+28522E: 8B 40 58           - mov eax,[eax+58]
+noita.exe+285231: 3B C1              - cmp eax,ecx
+noita.exe+285233: 74 42              - je noita.exe+285277
+noita.exe+285235: 8B 10              - mov edx,[eax]
+noita.exe+285237: 85 D2              - test edx,edx
+noita.exe+285239: 74 0B              - je noita.exe+285246
+// ---------- INJECTING HERE ----------
+noita.exe+28523B: F3 0F 58 4A 50     - addss xmm1,[edx+50]
+// ---------- DONE INJECTING  ----------
+noita.exe+285240: F3 0F 58 52 54     - addss xmm2,[edx+54]
+noita.exe+285245: 46                 - inc esi
+noita.exe+285246: 83 C0 04           - add eax,04
+noita.exe+285249: 3B C1              - cmp eax,ecx
+noita.exe+28524B: 75 E8              - jne noita.exe+285235
+noita.exe+28524D: 85 F6              - test esi,esi
+noita.exe+28524F: 7E 26              - jle noita.exe+285277
+noita.exe+285251: 66 0F 6E C6        - movd xmm0,esi
+noita.exe+285255: 0F 5B C0           - cvtdq2ps xmm0,xmm0
+noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1019</ID>
+                  <Description>"0x50 | x"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+50</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1020</ID>
+                  <Description>"0x54 | y"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+54</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1021</ID>
+                  <Description>"0x58 | width"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+58</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1027</ID>
+                  <Description>"0x5c | skew_clockwise"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+5c</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1026</ID>
+                  <Description>"0x60 | skew_anticlockwise"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+60</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1025</ID>
+                  <Description>"0x64 | height"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+64</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1024</ID>
+                  <Description>"0x68 | width"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[player_geometry_ptr]+68</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1028</ID>
+                  <Description>"TELEPORTS"</Description>
+                  <Color>0000FF</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>1029</ID>
+                      <Description>"Fungal Cavern"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-2229.408691
+
+[player_geometry_ptr]+54:
+  dd (float)2351.99707
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1039</ID>
+          <Description>"POTION"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1038</ID>
+              <Description>"inf_potion_hook"</Description>
+              <Options moHideChildren="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-25
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+
+  movsd [eax+esi*8],xmm0
+
+  push ebp
+  lea ebp, [eax+esi*8]
+  lea ebp, [ebp+4]
+
+  sub esp, 16
+  movups [esp], xmm0
+
+  movups xmm0, [potion_capacity]
+  movups [ebp],xmm0
+
+  movups xmm0, [esp]
+
+  add esp, 16
+  pop ebp
+
+  jmp return
+
+potion_hook:
+  jmp newmem
+return:
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+potion_hook:
+  db F2 0F 11 04 F0
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+676A29
+
+noita.exe+6769F8: C7 40 48 00 00 40 41              - mov [eax+48],41400000
+noita.exe+6769FF: 80 C9 08                          - or cl,08
+noita.exe+676A02: C6 40 69 01                       - mov byte ptr [eax+69],01
+noita.exe+676A06: 88 48 6A                          - mov [eax+6A],cl
+noita.exe+676A09: C7 40 3C 00 00 00 00              - mov [eax+3C],00000000
+noita.exe+676A10: 8B 47 70                          - mov eax,[edi+70]
+noita.exe+676A13: 8D 4C 24 70                       - lea ecx,[esp+70]
+noita.exe+676A17: 68 2C FE E4 00                    - push noita.exe+A4FE2C
+noita.exe+676A1C: F2 0F 10 04 F0                    - movsd xmm0,[eax+esi*8]
+noita.exe+676A21: F2 0F 5C 05 D8 B0 E6 00           - subsd xmm0,[noita.exe+A6B0D8]
+// ---------- INJECTING HERE ----------
+noita.exe+676A29: F2 0F 11 04 F0                    - movsd [eax+esi*8],xmm0
+// ---------- DONE INJECTING  ----------
+noita.exe+676A2E: E8 5D 67 9A FF                    - call noita.exe+1D190
+noita.exe+676A33: F3 0F 10 54 24 24                 - movss xmm2,[esp+24]
+noita.exe+676A39: 8D 54 24 70                       - lea edx,[esp+70]
+noita.exe+676A3D: 8B 4C 24 20                       - mov ecx,[esp+20]
+noita.exe+676A41: C7 84 24 98 00 00 00 03 00 00 00  - mov [esp+00000098],00000003
+noita.exe+676A4C: E8 CF 5E ED FF                    - call noita.exe+54C920
+noita.exe+676A51: 8D 4C 24 70                       - lea ecx,[esp+70]
+noita.exe+676A55: C7 84 24 98 00 00 00 FF FF FF FF  - mov [esp+00000098],FFFFFFFF
+noita.exe+676A60: E8 8B 67 9A FF                    - call noita.exe+1D1F0
+noita.exe+676A65: 8B 47 74                          - mov eax,[edi+74]
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1040</ID>
+                  <Description>"potion_capacity"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>FF0000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>potion_capacity</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1044</ID>
+          <Description>"SPELL"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1043</ID>
+              <Description>"inf_spells"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-25
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov ecx,#999
+  mov [eax+68],ecx
+  mov ecx,[ebp-10]
+  jmp return
+
+spell_number_inject:
+  jmp newmem
+  nop
+return:
+
+
+[DISABLE]
+
+spell_number_inject:
+  db 89 48 68 8B 4D F0
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+5D620F
+
+noita.exe+5D61F8: FF 50 28           - call dword ptr [eax+28]
+noita.exe+5D61FB: 83 F8 FF           - cmp eax,-01
+noita.exe+5D61FE: 7E 12              - jle noita.exe+5D6212
+noita.exe+5D6200: 8B 13              - mov edx,[ebx]
+noita.exe+5D6202: 8B CB              - mov ecx,ebx
+noita.exe+5D6204: 50                 - push eax
+noita.exe+5D6205: FF 52 1C           - call dword ptr [edx+1C]
+noita.exe+5D6208: 85 C0              - test eax,eax
+noita.exe+5D620A: 74 06              - je noita.exe+5D6212
+noita.exe+5D620C: 8B 4D E4           - mov ecx,[ebp-1C]
+// ---------- INJECTING HERE ----------
+noita.exe+5D620F: 89 48 68           - mov [eax+68],ecx
+// ---------- DONE INJECTING  ----------
+noita.exe+5D6212: 8B 4D F0           - mov ecx,[ebp-10]
+noita.exe+5D6215: E8 16 84 04 00     - call noita.exe+61E630
+noita.exe+5D621A: 8B 15 A8 C6 FF 00  - mov edx,[noita.exe+BFC6A8]
+noita.exe+5D6220: 83 C6 08           - add esi,08
+noita.exe+5D6223: 3B F7              - cmp esi,edi
+noita.exe+5D6225: 0F 85 0C FF FF FF  - jne noita.exe+5D6137
+noita.exe+5D622B: 8B 35 E0 C5 FF 00  - mov esi,[noita.exe+BFC5E0]
+noita.exe+5D6231: A1 EC C5 FF 00     - mov eax,[noita.exe+BFC5EC]
+noita.exe+5D6236: 89 35 E4 C5 FF 00  - mov [noita.exe+BFC5E4],esi
+noita.exe+5D623C: A3 F0 C5 FF 00     - mov [noita.exe+BFC5F0],eax
+}
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1041</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>31382EA4</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1042</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>24C068C8</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
