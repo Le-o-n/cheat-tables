@@ -627,6 +627,21 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
 
 </AssemblerScript>
                     </CheatEntry>
+                    <CheatEntry>
+                      <ID>1054</ID>
+                      <Description>"First Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)1401.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
                   </CheatEntries>
                 </CheatEntry>
               </CheatEntries>
