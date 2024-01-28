@@ -552,6 +552,36 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
 
 </AssemblerScript>
                     </CheatEntry>
+                    <CheatEntry>
+                      <ID>1049</ID>
+                      <Description>"Mountain Alter"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)778.8309326
+
+[player_geometry_ptr]+54:
+  dd (float)-1150.002808
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1050</ID>
+                      <Description>"Mountain Alter Orb"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)778.8309326
+
+[player_geometry_ptr]+54:
+  dd (float)-1100.002808
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
                   </CheatEntries>
                 </CheatEntry>
               </CheatEntries>
