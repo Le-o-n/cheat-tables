@@ -538,6 +538,21 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
                   <GroupHeader>1</GroupHeader>
                   <CheatEntries>
                     <CheatEntry>
+                      <ID>1053</ID>
+                      <Description>"Spawn"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)227
+
+[player_geometry_ptr]+54:
+  dd (float)-79
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
                       <ID>1029</ID>
                       <Description>"Fungal Cavern"</Description>
                       <VariableType>Auto Assembler Script</VariableType>
@@ -578,6 +593,36 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
 
 [player_geometry_ptr]+54:
   dd (float)-1100.002808
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1051</ID>
+                      <Description>"Pyramid Orb"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)9985.428711
+
+[player_geometry_ptr]+54:
+  dd (float)-1167.002808
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1052</ID>
+                      <Description>"Right Wall"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)15870.54199
+
+[player_geometry_ptr]+54:
+  dd (float)17.99721527
 [DISABLE]
 
 </AssemblerScript>
