@@ -30,6 +30,9 @@ registersymbol(potion_hook)
 aobscanmodule(inf_spell_inject,noita.exe,8B 41 68 3B C7)
 registersymbol(inf_spell_inject)
 
+aobscanmodule(max_mana_inject,noita.exe,F3 0F 10 80 88 00 00 00 F3 0F 5E)
+registersymbol(max_mana_inject)
+
 alloc(godmode_health,4)
 registersymbol(godmode_health)
 godmode_health:
@@ -43,6 +46,10 @@ registersymbol(potion_capacity)
 potion_capacity:
   dd (float)6.0
 
+alloc(max_mana, 4)
+registersymbol(max_mana)
+max_mana:
+  dd (float)100
 [DISABLE]
 
 unregistersymbol(noita_seed_menu_access)
@@ -52,6 +59,7 @@ unregistersymbol(godmode_inject)
 unregistersymbol(player_struct_hook)
 unregistersymbol(potion_hook)
 unregistersymbol(inf_spell_inject)
+unregistersymbol(max_mana_inject)
 
 unregistersymbol(godmode_health)
 dealloc(godmode_health)
@@ -61,6 +69,9 @@ dealloc(player_geometry_ptr)
 
 unregistersymbol(potion_capacity)
 dealloc(potion_capacity)
+
+unregistersymbol(max_mana)
+dealloc(max_mana)
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
@@ -305,7 +316,7 @@ noita.exe+6112B2: 6A 02              - push 02
                   <ID>3</ID>
                   <Description>"gold"</Description>
                   <ShowAsSigned>0</ShowAsSigned>
-                  <VariableType>4 Bytes</VariableType>
+                  <VariableType>8 Bytes</VariableType>
                   <Address>[gold_ptr]+48</Address>
                 </CheatEntry>
               </CheatEntries>
@@ -637,7 +648,82 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
   dd (float)-332.4957275
 
 [player_geometry_ptr]+54:
-  dd (float)1301.997192
+  dd (float)1300.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1055</ID>
+                      <Description>"Second Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)2920.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1056</ID>
+                      <Description>"Third Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)4920.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1057</ID>
+                      <Description>"Forth Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)6520.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1058</ID>
+                      <Description>"Fifth Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)8520.997192
+[DISABLE]
+
+</AssemblerScript>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1059</ID>
+                      <Description>"Sixth Holy Mountain"</Description>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>[ENABLE]
+
+[player_geometry_ptr]+50:
+  dd (float)-332.4957275
+
+[player_geometry_ptr]+54:
+  dd (float)10520.997192
 [DISABLE]
 
 </AssemblerScript>
@@ -829,6 +915,95 @@ noita.exe+60DD78: 88 54 24 1B        - mov [esp+1B],dl
 </AssemblerScript>
             </CheatEntry>
           </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1063</ID>
+      <Description>"DEV [Broken but in development]"</Description>
+      <Options moHideChildren="1"/>
+      <Color>FFFFFF</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1061</ID>
+          <Description>"max_mana_hook"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : noita.exe
+  Version: 
+  Date   : 2024-01-29
+  Author : Leon
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ 
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+  push ebp
+
+  sub esp, 16
+  movups [esp], xmm0
+
+  movups xmm0, [max_mana]
+  movups [eax+00000088],xmm0
+
+  movups xmm0, [esp]
+
+  add esp, 16
+  pop ebp
+code:
+  movss xmm0,[eax+00000088]
+  jmp return
+
+max_mana_inject:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+max_mana_inject:
+  db F3 0F 10 80 88 00 00 00
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: noita.exe+611AC9
+
+noita.exe+611A92: 8D 45 D8                 - lea eax,[ebp-28]
+noita.exe+611A95: 50                       - push eax
+noita.exe+611A96: 83 EC 28                 - sub esp,28
+noita.exe+611A99: C7 44 24 24 00 00 80 40  - mov [esp+24],40800000
+noita.exe+611AA1: C7 44 24 20 00 00 20 42  - mov [esp+20],42200000
+noita.exe+611AA9: C7 44 24 1C 00 00 00 00  - mov [esp+1C],00000000
+noita.exe+611AB1: C7 44 24 18 00 00 00 00  - mov [esp+18],00000000
+noita.exe+611AB9: 8B 85 FC FD FF FF        - mov eax,[ebp-00000204]
+noita.exe+611ABF: 8B CE                    - mov ecx,esi
+noita.exe+611AC1: C7 44 24 14 00 00 80 3F  - mov [esp+14],3F800000
+// ---------- INJECTING HERE ----------
+noita.exe+611AC9: F3 0F 10 80 88 00 00 00  - movss xmm0,[eax+00000088]
+// ---------- DONE INJECTING  ----------
+noita.exe+611AD1: F3 0F 5E 80 8C 00 00 00  - divss xmm0,[eax+0000008C]
+noita.exe+611AD9: 8D 85 40 FD FF FF        - lea eax,[ebp-000002C0]
+noita.exe+611ADF: F3 0F 11 44 24 10        - movss [esp+10],xmm0
+noita.exe+611AE5: 50                       - push eax
+noita.exe+611AE6: E8 45 D0 D3 FF           - call noita.exe+34EB30
+noita.exe+611AEB: 50                       - push eax
+noita.exe+611AEC: 8D 95 90 FE FF FF        - lea edx,[ebp-00000170]
+noita.exe+611AF2: 8D 8D F0 FC FF FF        - lea ecx,[ebp-00000310]
+noita.exe+611AF8: E8 33 51 D4 FF           - call noita.exe+356C30
+noita.exe+611AFD: 83 C4 04                 - add esp,04
+}
+</AssemblerScript>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
