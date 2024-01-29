@@ -637,7 +637,7 @@ noita.exe+285258: 8B 35 B0 68 01 01  - mov esi,[noita.exe+C168B0]
   dd (float)-332.4957275
 
 [player_geometry_ptr]+54:
-  dd (float)1401.997192
+  dd (float)1301.997192
 [DISABLE]
 
 </AssemblerScript>
