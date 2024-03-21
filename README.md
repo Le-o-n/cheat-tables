@@ -1,5 +1,5 @@
 # CheatTables
-Cheat tables for various games I've created. Run these at your own risk, they may cause crashes, corrupt save files or bans. I take zero liability.
+Cheat tables for various games I've created. Run these at your own risk, they may cause crashes, corrupt save files or bans (if the game has an anticheat). I take zero liability.
 
 # How to use
 ### Step 1 - Download Cheat Engine Installer
